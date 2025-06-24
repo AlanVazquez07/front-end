@@ -20,7 +20,7 @@ export default defineConfig(({ mode }) => {
     define: {
       // Exponer solo variables específicas necesarias en el frontend
       'process.env.APP_NAME': JSON.stringify(env.APP_NAME),
-      //'process.env.API_BASE_URL': JSON.stringify(env.API_BASE_URL),
+      'process.env.API_BASE_URL': JSON.stringify(env.API_BASE_URL),
       'process.env.RECAPTCHA_SITE_KEY': JSON.stringify(env.RECAPTCHA_SITE_KEY)
     }
   }

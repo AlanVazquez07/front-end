@@ -9,7 +9,7 @@ Este proyecto es una SPA desarrollada con [Vue](https://vuejs.org/guide/introduc
 ### Instalación Ambiente de Desarrollo
 
 1. Abrir una terminal en la carpeta raiz del proyecto.
-2. Crear archivo **.env**.
+2. Crear archivo **.env** y definir las variables de entorno.
     ```sh
     cp .env.example .env
     ```

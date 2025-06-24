@@ -9,6 +9,9 @@ const props = defineProps({
   },
 })
 
+const API_BASE_URL = process.env.API_BASE_URL;
+const API_URL_STORE = `${API_BASE_URL}/requests/store`;
+
 const personType = ref('persona-fisica')
 const formData = reactive({
   // Persona Física
@@ -220,18 +223,18 @@ const handleSubmit = async (e) => {
 
     formPayload.append('other_document', formData.other_document)
 
-    const plainObject = Object.fromEntries(formPayload.entries());
-    console.log(plainObject);
+    //const plainObject = Object.fromEntries(formPayload.entries());
+    //console.log(plainObject);
 
     // Enviar a backend
-    /* const response = await fetch('api-endpoint', {
+    const response = await fetch(API_URL_STORE, {
       method: 'POST',
       body: formPayload,
     })
 
     if (!response.ok) {
       throw new Error('Error al enviar el formulario')
-    } */
+    }
 
     submitSuccess.value = true
   } catch (error) {
