@@ -15,7 +15,7 @@ const API_URL_STORE = `${API_BASE_URL}/requests/store`;
 const personType = ref('persona-fisica')
 const formData = reactive({
   // Persona Física
-  names: '',
+  name: '',
   first_last_name: '',
   second_last_name: '',
 
@@ -30,7 +30,7 @@ const formData = reactive({
   // Archivos
   evidence_made_in_mexico: null,
   evidence_supplies_origin: null,
-  sustainable_development_actions: '',
+  sustainable_development_actions: null,
   identification_file: null,
   tax_certificate: null,
   other_document: null,
@@ -61,7 +61,7 @@ const validateField = (field, value) => {
         return false
       }
       break
-    case 'names':
+    case 'name':
     case 'first_last_name':
     case 'second_last_name':
     case 'company_name':
@@ -105,7 +105,7 @@ const validateForm = () => {
 
   // Validar campos según tipo de persona
   if (personType.value === 'persona-fisica') {
-    isValid = validateField('names', formData.names) && isValid
+    isValid = validateField('name', formData.name) && isValid
     isValid =
       validateField('first_last_name', formData.first_last_name) && isValid
   } else {
@@ -118,11 +118,6 @@ const validateForm = () => {
   // Validar campos comunes
   isValid = validateField('contact_number', formData.contact_number) && isValid
   isValid = validateField('email', formData.email) && isValid
-  isValid =
-    validateField(
-      'sustainable_development_actions',
-      formData.sustainable_development_actions
-    ) && isValid
 
   // Validar archivos requeridos
   if (!formData.evidence_made_in_mexico) {
@@ -147,6 +142,11 @@ const validateForm = () => {
 
   if (!formData.other_document) {
     errors.other_document = 'Este archivo es requerido'
+    isValid = false
+  }
+
+  if (!formData.sustainable_development_actions) {
+    errors.sustainable_development_actions = 'Este archivo es requerido'
     isValid = false
   }
 
@@ -190,14 +190,14 @@ const handleSubmit = async (e) => {
     // Agregar token de reCAPTCHA
     formPayload.append('recaptcha_token', token)
     // Agregar datos al FormData
-    formPayload.append('personType', personType.value)
+    formPayload.append('person_type', personType.value)
 
     if (personType.value === 'persona-fisica') {
-      formPayload.append('names', formData.names)
+      formPayload.append('name', formData.name)
       formPayload.append('first_last_name', formData.first_last_name)
       formPayload.append('second_last_name', formData.second_last_name)
     } else {
-      formPayload.append('company_name', formData.company_name)
+      formPayload.append('name', formData.company_name)
       formPayload.append('legal_representative', formData.legal_representative)
     }
 
@@ -229,6 +229,10 @@ const handleSubmit = async (e) => {
     // Enviar a backend
     const response = await fetch(API_URL_STORE, {
       method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        // Add any other headers you need here
+      },
       body: formPayload,
     })
 
@@ -318,20 +322,20 @@ const handleSubmit = async (e) => {
       <div v-if="personType == 'persona-fisica'">
         <!-- Nombre(s) -->
         <div class="input-group mb-16 w-100">
-          <label for="names">Nombre(s)</label>
+          <label for="name">Nombre(s)</label>
           <input
             type="text"
-            id="names"
-            name="names"
-            v-model="formData.names"
-            @blur="validateField('names', formData.names)"
+            id="name"
+            name="name"
+            v-model="formData.name"
+            @blur="validateField('name', formData.name)"
             minlength="3"
             maxlength="200"
             required
             aria-required="true"
           />
-          <span v-if="errors.names" class="error-message">{{
-            errors.names
+          <span v-if="errors.name" class="error-message">{{
+            errors.name
           }}</span>
         </div>
 
@@ -509,7 +513,7 @@ const handleSubmit = async (e) => {
       </div>
 
       <!-- ODS -->
-      <div class="input-group mb-16 w-100">
+      <div class="input-group-file mb-16">
         <label for="sustainable_development_actions">
           Acciones afirmativas respecto al cumplimiento de uno o más Objetivos
           de Desarrollo Sostenible
@@ -521,19 +525,14 @@ const handleSubmit = async (e) => {
               Consulta más en este enlace
             </a>
           </span>
-          <textarea
+          <input
+            type="file"
             name="sustainable_development_actions"
-            id="sustainable_development_actions"
-            v-model="formData.sustainable_development_actions"
-            @blur="
-              validateField(
-                'sustainable_development_actions',
-                formData.sustainable_development_actions
-              )
-            "
-            rows="3"
+            id="sustainable_development_actions_file"
+            @change="(e) => handleFileChange(e, 'sustainable_development_actions')"
+            accept="image/png,image/jpeg,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.png,.jpg,.pdf,.doc,.docx"
             required
-          ></textarea>
+          />
           <span
             v-if="errors.sustainable_development_actions"
             class="error-message"
