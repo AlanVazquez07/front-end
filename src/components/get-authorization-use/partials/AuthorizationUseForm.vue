@@ -63,7 +63,7 @@ const validateField = (field, value) => {
       break
     case 'name':
     case 'first_last_name':
-    case 'second_last_name':
+    //case 'second_last_name':
     case 'company_name':
     case 'legal_representative':
       if (!/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/.test(value)) {
@@ -217,9 +217,9 @@ const handleSubmit = async (e) => {
     )
     formPayload.append('identification_file', formData.identification_file)
 
-    if (personType.value === 'persona-moral') {
+    //if (personType.value === 'persona-moral') {
       formPayload.append('tax_certificate', formData.tax_certificate)
-    }
+    //}
 
     formPayload.append('other_document', formData.other_document)
 
@@ -369,9 +369,9 @@ const handleSubmit = async (e) => {
             @blur="validateField('second_last_name', formData.second_last_name)"
             maxlength="20"
           />
-          <span v-if="errors.second_last_name" class="error-message">{{
+          <!--<span v-if="errors.second_last_name" class="error-message">{{
             errors.second_last_name
-          }}</span>
+          }}</span>-->
         </div>
       </div>
 
@@ -568,6 +568,28 @@ const handleSubmit = async (e) => {
           <span v-if="errors.identification_file" class="error-message">{{
             errors.identification_file
           }}</span>
+        </div>
+      </div>
+
+<!-- Documentos Persona fisica -->
+      <div v-if="personType == 'persona-fisica'">
+        <!-- Constancia fiscal -->
+        <div id="grupo-constancia" class="input-group-file mb-16">
+          <label for="tax_certificate">
+            Constancia de situación fiscal
+            <b>(con una vigencia no mayor a tres meses)</b>
+            <input
+              type="file"
+              name="tax_certificate"
+              id="tax_certificate_file"
+              @change="(e) => handleFileChange(e, 'tax_certificate')"
+              accept="image/png,image/jpeg,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.png,.jpg,.pdf,.doc,.docx"
+              required
+            />
+            <span v-if="errors.tax_certificate" class="error-message">{{
+              errors.tax_certificate
+            }}</span>
+          </label>
         </div>
       </div>
 
