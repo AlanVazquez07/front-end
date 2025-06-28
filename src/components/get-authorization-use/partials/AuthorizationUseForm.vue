@@ -63,7 +63,7 @@ const validateField = (field, value) => {
       break
     case 'name':
     case 'first_last_name':
-    //case 'second_last_name':
+    case 'second_last_name':
     case 'company_name':
     case 'legal_representative':
       if (!/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/.test(value)) {
@@ -571,48 +571,23 @@ const handleSubmit = async (e) => {
         </div>
       </div>
 
-<!-- Documentos Persona fisica -->
-      <div v-if="personType == 'persona-fisica'">
-        <!-- Constancia fiscal -->
-        <div id="grupo-constancia" class="input-group-file mb-16">
-          <label for="tax_certificate">
-            Constancia de situación fiscal
-            <b>(con una vigencia no mayor a tres meses)</b>
-            <input
-              type="file"
-              name="tax_certificate"
-              id="tax_certificate_file"
-              @change="(e) => handleFileChange(e, 'tax_certificate')"
-              accept="image/png,image/jpeg,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.png,.jpg,.pdf,.doc,.docx"
-              required
-            />
-            <span v-if="errors.tax_certificate" class="error-message">{{
-              errors.tax_certificate
-            }}</span>
-          </label>
-        </div>
-      </div>
-
-      <!-- Documentos Persona Moral -->
-      <div v-if="personType == 'persona-moral'">
-        <!-- Constancia fiscal -->
-        <div id="grupo-constancia" class="input-group-file mb-16">
-          <label for="tax_certificate">
-            Constancia de situación fiscal
-            <b>(con una vigencia no mayor a tres meses)</b>
-            <input
-              type="file"
-              name="tax_certificate"
-              id="tax_certificate_file"
-              @change="(e) => handleFileChange(e, 'tax_certificate')"
-              accept="image/png,image/jpeg,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.png,.jpg,.pdf,.doc,.docx"
-              required
-            />
-            <span v-if="errors.tax_certificate" class="error-message">{{
-              errors.tax_certificate
-            }}</span>
-          </label>
-        </div>
+      <!-- Constancia fiscal -->
+      <div id="grupo-constancia" class="input-group-file mb-16">
+        <label for="tax_certificate">
+          Constancia de situación fiscal
+          <b>(con una vigencia no mayor a tres meses)</b>
+          <input
+            type="file"
+            name="tax_certificate"
+            id="tax_certificate_file"
+            @change="(e) => handleFileChange(e, 'tax_certificate')"
+            accept="image/png,image/jpeg,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.png,.jpg,.pdf,.doc,.docx"
+            required
+          />
+          <span v-if="errors.tax_certificate" class="error-message">{{
+            errors.tax_certificate
+          }}</span>
+        </label>
       </div>
 
       <!-- Otro documento -->
