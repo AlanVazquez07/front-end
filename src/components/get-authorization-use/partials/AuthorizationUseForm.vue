@@ -86,15 +86,27 @@ const handleFileChange = (event, field) => {
       return
     }
 
-    // Validar extensiones permitidas
-    const allowedExtensions = ['.png', '.jpg', '.jpeg', '.pdf', '.doc', '.docx', '.zip']
+    // Validar extensiones permitidas según el archivo
+    if(field != 'other_document')
+    {
+    const allowedExtensions = ['.png', '.jpg', '.jpeg', '.pdf', '.doc', '.docx']
     const fileExtension = '.' + file.name.split('.').pop().toLowerCase()
 
     if (!allowedExtensions.includes(fileExtension)) {
       errors[field] = 'Formato de archivo no permitido'
       return
     }
+    }
+    else
+    {
+    const allowedExtensions = ['.zip']
+    const fileExtension = '.' + file.name.split('.').pop().toLowerCase()
 
+    if (!allowedExtensions.includes(fileExtension)) {
+      errors[field] = 'Formato de archivo no permitido'
+      return
+    }
+    }
     formData[field] = file
     delete errors[field]
   }
