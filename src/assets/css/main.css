@@ -195,7 +195,7 @@ p {
     border-radius: .5rem;
     box-shadow: 0 0 0 transparent;
     cursor: pointer;
-    font-family: Noto;
+    font-family: Noto, sans-serif;
     font-size: 1rem;
     justify-content: center;
     max-width: -moz-max-content;

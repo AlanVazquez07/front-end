@@ -1,6 +1,7 @@
 <script setup>
 import Loader from '@/components/shared/Loader.vue'
 import { ref, reactive } from 'vue'
+import { storeAuthorizationUse } from '../../../../api/AuthorizationUseService';
 
 const props = defineProps({
   recaptchaLoaded: {
@@ -8,9 +9,6 @@ const props = defineProps({
     required: true,
   },
 })
-
-const API_BASE_URL = process.env.API_BASE_URL;
-const API_URL_STORE = `${API_BASE_URL}/requests/store`;
 
 const personType = ref('persona-fisica')
 const formData = reactive({
@@ -229,26 +227,14 @@ const handleSubmit = async (e) => {
     )
     formPayload.append('identification_file', formData.identification_file)
 
-    //if (personType.value === 'persona-moral') {
-      formPayload.append('tax_certificate', formData.tax_certificate)
-    //}
+    formPayload.append('tax_certificate', formData.tax_certificate)
 
     formPayload.append('other_document', formData.other_document)
 
-    //const plainObject = Object.fromEntries(formPayload.entries());
-    //console.log(plainObject);
-
     // Enviar a backend
-    const response = await fetch(API_URL_STORE, {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        // Add any other headers you need here
-      },
-      body: formPayload,
-    })
+    const response = await storeAuthorizationUse(formPayload)
 
-    if (!response.ok) {
+    if (!response.success) {
       throw new Error('Error al enviar el formulario')
     }
 
@@ -381,9 +367,6 @@ const handleSubmit = async (e) => {
             @blur="validateField('second_last_name', formData.second_last_name)"
             maxlength="20"
           />
-          <!--<span v-if="errors.second_last_name" class="error-message">{{
-            errors.second_last_name
-          }}</span>-->
         </div>
       </div>
 

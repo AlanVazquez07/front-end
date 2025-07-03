@@ -57,6 +57,12 @@
         muted
         loop
       >
+      <track
+          src="@/assets/media/subtitles-es.vtt"
+          kind="subtitles"
+          srclang="es"
+          label="Spanish"
+        />
         <source
           src="@/assets/media/HECHO-EN-MEXICO-VIDEO-LANZAMIENTO.mp4"
           type="video/mp4"
@@ -67,6 +73,7 @@
         class="cnt play"
         width="100"
         height="100"
+        alt="Play/Pause"
       />
     </div>
     <div class="mute muted">
@@ -75,6 +82,7 @@
         class="w-100"
         width="100"
         height="100"
+        alt="Mute/Unmute"
       />
     </div>
   </div>
