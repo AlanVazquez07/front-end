@@ -1,7 +1,7 @@
 <script setup>
 import Loader from '@/components/shared/Loader.vue'
 import { ref, reactive } from 'vue'
-import { storeAuthorizationUse } from '../../../../api/AuthorizationUseService';
+import { storeAuthorizationUse } from '../../../../api/AuthorizationUseService'
 
 const props = defineProps({
   recaptchaLoaded: {
@@ -85,25 +85,29 @@ const handleFileChange = (event, field) => {
     }
 
     // Validar extensiones permitidas según el archivo
-    if(field != 'other_document')
-    {
-    const allowedExtensions = ['.png', '.jpg', '.jpeg', '.pdf', '.doc', '.docx']
-    const fileExtension = '.' + file.name.split('.').pop().toLowerCase()
+    if (field != 'other_document') {
+      const allowedExtensions = [
+        '.png',
+        '.jpg',
+        '.jpeg',
+        '.pdf',
+        '.doc',
+        '.docx',
+      ]
+      const fileExtension = '.' + file.name.split('.').pop().toLowerCase()
 
-    if (!allowedExtensions.includes(fileExtension)) {
-      errors[field] = 'Formato de archivo no permitido'
-      return
-    }
-    }
-    else
-    {
-    const allowedExtensions = ['.zip']
-    const fileExtension = '.' + file.name.split('.').pop().toLowerCase()
+      if (!allowedExtensions.includes(fileExtension)) {
+        errors[field] = 'Formato de archivo no permitido'
+        return
+      }
+    } else {
+      const allowedExtensions = ['.zip']
+      const fileExtension = '.' + file.name.split('.').pop().toLowerCase()
 
-    if (!allowedExtensions.includes(fileExtension)) {
-      errors[field] = 'Formato de archivo no permitido'
-      return
-    }
+      if (!allowedExtensions.includes(fileExtension)) {
+        errors[field] = 'Formato de archivo no permitido'
+        return
+      }
     }
     formData[field] = file
     delete errors[field]
@@ -165,7 +169,7 @@ const validateForm = () => {
 
 // Ejecutar reCAPTCHA
 const executeRecaptcha = async () => {
-  const siteKey = process.env.RECAPTCHA_SITE_KEY;
+  const siteKey = process.env.RECAPTCHA_SITE_KEY
   if (!window.grecaptcha || !props.recaptchaLoaded) {
     console.error('reCAPTCHA no está cargado')
     return null
@@ -524,7 +528,9 @@ const handleSubmit = async (e) => {
             type="file"
             name="sustainable_development_actions"
             id="sustainable_development_actions_file"
-            @change="(e) => handleFileChange(e, 'sustainable_development_actions')"
+            @change="
+              (e) => handleFileChange(e, 'sustainable_development_actions')
+            "
             accept="image/png,image/jpeg,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.png,.jpg,.pdf,.doc,.docx"
             required
           />

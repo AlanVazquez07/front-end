@@ -1,15 +1,16 @@
-const API_BASE_URL = process.env.API_BASE_URL;
-const API_URL_STORE = `${API_BASE_URL}/requests/store`;
+import { API_BASE_URL, getHeaders } from './Config';
 
-const HEADERS = {
-  'Accept': 'application/json',
-}
+const API_URL_STORE = `${API_BASE_URL}/requests/store`;
+const HEADERS = getHeaders();
+
 
 export async function storeAuthorizationUse(authorizationUse) {
   try {
     const response = await fetch(API_URL_STORE, {
       method: 'POST',
-      headers: HEADERS,
+      headers: {
+        ...HEADERS
+      },
       body: authorizationUse,
     });
 
