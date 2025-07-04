@@ -4,12 +4,16 @@ const HEADERS = {
     'Accept': 'application/json',
 };
 
-export function getHeaders(includeToken = false) {
-    const headers = { ...HEADERS }; // Copia de los encabezados base
+const TOKEN_KEY = 'grp_token';
 
-    if(includeToken) {
-        const token = sessionStorage.getItem('grp_token'); // Obtener el token de sessionStorage
-        headers['Authorization'] = `Bearer ${token}`; // Agregar el token si es necesario
+export function getHeaders(includeToken = false) {
+    const headers = { ...HEADERS };
+
+    if (includeToken) {
+        const token = sessionStorage.getItem(TOKEN_KEY);
+        if (token) {
+            headers['Authorization'] = `Bearer ${token}`;
+        }
     }
 
     return headers;
