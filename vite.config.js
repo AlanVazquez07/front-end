@@ -24,6 +24,12 @@ export default defineConfig(({ mode }) => {
       'process.env.RECAPTCHA_SITE_KEY': JSON.stringify(env.RECAPTCHA_SITE_KEY)
     },
     test: {
+      coverage: {
+        provider: 'istanbul', // o 'c8' (pero 'istanbul' es más compatible con SonarQube)
+        reporter: ['text', 'json', 'lcov'], // Genera informe en formato lcov
+        reportsDirectory: './coverage', // Carpeta donde se guardan los informes
+        all: true, // Incluir todos los archivos, incluso los no probados
+      },
       environment: 'jsdom',
       globals: true,
     },
